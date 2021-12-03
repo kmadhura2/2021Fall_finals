@@ -16,6 +16,8 @@ def data(path):
 
     # print(df.head())
     df.drop(columns=['Report Type','Lower CI','Upper CI','Source','Source Year','Rank'], inplace=True)
+
+    df = df.pivot(index='State Name', columns='Measure Name', values='Value')
     # df.groupby('Measure Name')
     print(df.head())
 
@@ -27,8 +29,3 @@ annual_filenames=['Datasets/Annual Reports/2011-Annual.csv','Datasets/Annual Rep
 for i in range(len(annual_filenames)):
     #function_name([i])
     data(annual_filenames[i])
-#data('Datasets/2020-Annual (1).csv')
-
-
-
-
