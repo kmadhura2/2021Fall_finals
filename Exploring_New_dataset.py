@@ -46,16 +46,15 @@ def data(annual_path, population_path, aqi_path,i):
     frames=[df,data_merge]
     data_merge=pd.concat(frames,axis=1, join="inner")
     frames_1 = [final, data_merge]
-    result = pd.concat(frames_1, axis=0, join="inner")
+    #result = pd.concat(frames_1, axis=0, join="inner")
     ##data_merge=pd.concat(frames_1,axis=0)
-    print(result)
+    #print(result)
     #i = i + 1
     #data_merge.append(year)
-    #print(data_merge)
+    print(data_merge)
     #frames_1=[final,data_merge]
     #final_1=pd.concat(frames_1, axis=0)
     #print(final_1)
-    return data_merge
 
 annual_filenames=['Datasets/Annual Reports/2012-Annual.csv',
                   'Datasets/Annual Reports/2013-Annual.csv','Datasets/Annual Reports/2014-Annual.csv',
@@ -76,6 +75,6 @@ years=['2012','2013','2014','2015','2016','2017','2018','2019','2020']
 final=pd.DataFrame
 for i in range(len(annual_filenames)):
     #function_name([i])
-    result= data(annual_filenames[i],population_files[i],AQI_files[i],i)
+    data(annual_filenames[i],population_files[i],AQI_files[i],i)
    #final= pd.concat([final,data(annual_filenames[i],population_files[i],AQI_files[i],i)],axis=0)
     #final=final.append(other=result)
