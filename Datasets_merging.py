@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 
-files = ["Datasets/population_2016.csv",
-         "Datasets/population_2017.csv",
-         "Datasets/population_2018.csv",
-         "Datasets/population_2019.csv"]
+files = ["Datasets/Population/population_2016.csv",
+         "Datasets/Population/population_2017.csv",
+         "Datasets/Population/population_2018.csv",
+         "Datasets/Population/population_2019.csv"]
 filess =["Datasets/smoking_2016.csv",
          "Datasets/smoking_2017.csv",
          "Datasets/smoking_2018.csv",
@@ -14,6 +14,8 @@ filesss=["Datasets/AQI/annual_aqi_by_county_2016.csv",
          "Datasets/AQI/annual_aqi_by_county_2018.csv",
          "Datasets/AQI/annual_aqi_by_county_2019.csv"]
 years=['2016','2017','2018','2019']
+data_append=pd.DataFrame()
+
 i = 0
 while i < len(files):
     population = pd.read_csv(files[i], skiprows=[0,1],usecols=['Location','Total Residents'])
@@ -36,7 +38,9 @@ while i < len(files):
 
     print('\n',years[i])
     print(data_merge)
+    data_append=data_append.append(data_merge)
     i=i+1
 
 # converting to csv
-data_merge.to_csv('Datasets/basic_info.csv')
+print(data_append)
+data_append.to_csv('Datasets/basic_info.csv')
