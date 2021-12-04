@@ -15,7 +15,6 @@ filesss=["Datasets/AQI/annual_aqi_by_county_2016.csv",
          "Datasets/AQI/annual_aqi_by_county_2019.csv"]
 years=['2016','2017','2018','2019']
 i = 0
-data_append=pd.DataFrame()
 while i < len(files):
     population = pd.read_csv(files[i], skiprows=[0,1],usecols=['Location','Total Residents'])
     population=population.dropna()
@@ -35,10 +34,9 @@ while i < len(files):
                            value=data_merge['Population'] / data_merge['LandArea'])
     data_merge.drop('LandArea',axis=1,inplace=True)
 
-    #print('\n',years[i])
-    #print(data_merge)
-    data_append=data_append.append(data_merge)
+    print('\n',years[i])
+    print(data_merge)
     i=i+1
 
-print(data_append)
-data_append.to_csv('Datasets/basic_info.csv')
+# converting to csv
+data_merge.to_csv('Datasets/basic_info.csv')
