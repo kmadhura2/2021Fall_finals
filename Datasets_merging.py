@@ -38,3 +38,5 @@ while i < len(files):
     print(data_merge)
     i=i+1
 
+# converting to csv
+data_merge.to_csv('Datasets/basic_info.csv')
