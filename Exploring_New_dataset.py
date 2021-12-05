@@ -82,7 +82,7 @@ def data(annual_path, population_path, aqi_path,i):
 
         row[5]=sum
         #print(row[5])
-    #print(data_merge.info())
+
     #print(data_merge['Metric'])
     print(data_merge.sort_values(by=['Population'], inplace=False))
 
