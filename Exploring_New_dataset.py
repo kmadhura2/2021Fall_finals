@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from scipy.stats import skew
+#import matplotlib.pyplot as plt
 def data(annual_path, population_path, aqi_path,i):
     dataset=pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
@@ -45,16 +47,46 @@ def data(annual_path, population_path, aqi_path,i):
     #data_merge=pd.merge(data_merge,df, how='inner')
     frames=[df,data_merge]
     data_merge=pd.concat(frames,axis=1, join="inner")
-    frames_1 = [final, data_merge]
     #result = pd.concat(frames_1, axis=0, join="inner")
     ##data_merge=pd.concat(frames_1,axis=0)
     #print(result)
     #i = i + 1
     #data_merge.append(year)
-    print(data_merge)
+    #print(data_merge.head())
     #frames_1=[final,data_merge]
     #final_1=pd.concat(frames_1, axis=0)
     #print(final_1)
+    data_merge.insert(5, 'Metric', '0.0')
+    skewed_data=data_merge.skew(axis=0, skipna=True)
+    quantile_50=data_merge.quantile(0.5, axis = 0)
+    quantile_75=data_merge.quantile(0.75, axis=0)
+    #print(skewed_data)
+    #print(quantile_50)
+    #print(quantile_75)
+    data_merge['Metric'] = data_merge['Metric'].astype(float)
+    for i, row in data_merge.iterrows():
+        sum=0
+        #print(f"Index: {i}")
+        #print(f"{row[0]}\n")
+        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] >= quantile_75[0]:
+            sum = +3
+        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and quantile_75[0] > row[0] >= quantile_50[0]:
+            sum = +2.5
+        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] < quantile_75[0]:
+            sum = +2
+        if quantile_75[2] >= row[2] >= quantile_50[2] and quantile_75[4] >= row[4] >= quantile_50[4] and row[0] >= \
+                quantile_75[0]:
+            sum = -1
+        if row[2] < quantile_50[2] and row[4] < quantile_75[4] and row[0] >= quantile_75[0]:
+            sum = -2
+
+        row[5]=sum
+        #print(row[5])
+    #print(data_merge.info())
+    #print(data_merge['Metric'])
+    print(data_merge.sort_values(by=['Population'], inplace=False))
+
+
 
 annual_filenames=['Datasets/Annual Reports/2012-Annual.csv',
                   'Datasets/Annual Reports/2013-Annual.csv','Datasets/Annual Reports/2014-Annual.csv',
@@ -73,7 +105,7 @@ AQI_files=["Datasets/AQI/annual_aqi_by_county_2012.csv",
            "Datasets/AQI/annual_aqi_by_county_2019.csv","Datasets/AQI/annual_aqi_by_county_2020.csv"]
 years=['2012','2013','2014','2015','2016','2017','2018','2019','2020']
 final=pd.DataFrame
-for i in range(len(annual_filenames)):
+for i in range(1):
     #function_name([i])
     data(annual_filenames[i],population_files[i],AQI_files[i],i)
    #final= pd.concat([final,data(annual_filenames[i],population_files[i],AQI_files[i],i)],axis=0)
