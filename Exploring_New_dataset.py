@@ -115,7 +115,7 @@ def data(annual_path, population_path, aqi_path,i):
         plt.plot(row[0],row[2])
         plt.show()
     #print(data_merge['Metric'])
-    #print(data_merge.sort_values(by=['Population'], inplace=False))
+    print(data_merge.sort_values(by=['Population'], inplace=False))
     #print('\n')
     #print(data_merge[['Population','Asthma', 'Population Density']])
 
