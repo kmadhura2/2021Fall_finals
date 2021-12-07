@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import skew
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 def data(annual_path, population_path, aqi_path,i):
     dataset=pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
@@ -63,28 +63,61 @@ def data(annual_path, population_path, aqi_path,i):
     #print(skewed_data)
     #print(quantile_50)
     #print(quantile_75)
+    #print(quantile_25)
     data_merge['Metric'] = data_merge['Metric'].astype(float)
     for i, row in data_merge.iterrows():
+        row[0]=(row[0]*row[2])/100
         sum=0
         #print(f"Index: {i}")
         #print(f"{row[0]}\n")
-        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] >= quantile_75[0]:
+        if (row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] >= quantile_75[0]) or \
+                (quantile_50[2]<=row[2]<quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and
+                 quantile_50[0]<=row[0]<quantile_75[0]) or (row[2]<quantile_50[2] and row[4]<quantile_50[4]and row[0]<quantile_50[0]):
             sum = +3
-        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and quantile_75[0] > row[0] >= quantile_50[0]:
-            sum = +2.5
-        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] < quantile_75[0]:
-            sum = +2
-        if quantile_75[2] >= row[2] >= quantile_50[2] and quantile_75[4] >= row[4] >= quantile_50[4] and row[0] >= \
-                quantile_75[0]:
-            sum = -1
-        if row[2] < quantile_50[2] and row[4] < quantile_75[4] and row[0] >= quantile_75[0]:
-            sum = -2
+        if (row[2]<quantile_50[2] and quantile_50[4]<=row[4]<quantile_75[4] and quantile_50[0]<=row[0]<quantile_75[0]) \
+            or (quantile_50[2]<=row[2]<quantile_75[2] and row[4]>quantile_75[4] and row[0]>=quantile_75[0]):
+            sum=+3.25
+        if(row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and quantile_50[0] <= row[0] < quantile_75[0]) or \
+            (quantile_50[2]<=row[2]<quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]<quantile_50[0]):
+            sum=+2.75
+        if (row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]>=quantile_75[0]) or \
+                (quantile_50[2]<=row[2]<quantile_75[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]):
+            sum=+2.5
+        if (row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and quantile_50[0]<=row[0]<quantile_75[0]) or \
+                (quantile_50[2]<=row[2]<quantile_75[2] and row[4]>=quantile_75[4] and row[0]>=quantile_75[0]):
+            sum=+2.0
+        if row[2]<quantile_50[2] and row[4]>=quantile_75[2] and quantile_50[0]<=row[0]<quantile_75[0]:
+            sum=+0.5
+        if row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]<quantile_50[0]:
+            sum=-0.5
+        if quantile_50[2]<=row[2]<quantile_75[2] and row[4]>=quantile_75[4] and row[0]<quantile_50[0]:
+           sum=+1
+        if row[2]<quantile_50[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]>=quantile_75[0]:
+            sum=+1.5
+        if quantile_50[2]<=row[2]<quantile_75[2] and row[4]<quantile_50[4] and row[0]>=quantile_75[0]:
+            sum=-0.25
+        if row[2]>=quantile_75[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]:
+            sum=+1.25
+        if row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] < quantile_50[0]:
+            sum=-1
+        if row[2]>= quantile_75[2] and row[4] < quantile_50[4] and row[0] < quantile_50[0]:
+            sum=-0.75
+        if row[2]<quantile_50[2] and row[4]>=quantile_75[4] and row[0]>=quantile_75[0]:
+            sum=-2
+        if row[2]<quantile_50[2] and row[4]<quantile_50[4] and row[0]>=quantile_75[0]:
+            sum=-3
+        if row[2]<quantile_50[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]:
+            sum=-2.5
+
 
         row[5]=sum
         #print(row[5])
-
+        plt.plot(row[0],row[2])
+        plt.show()
     #print(data_merge['Metric'])
-    print(data_merge.sort_values(by=['Population'], inplace=False))
+    #print(data_merge.sort_values(by=['Population'], inplace=False))
+    #print('\n')
+    #print(data_merge[['Population','Asthma', 'Population Density']])
 
 
 
