@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import skew
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 #from matplotlib import pyplot as plt
-def data(annual_path, population_path, aqi_path,i):
+def data(annual_path, population_path):
     dataset = pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
     list1 = dataset['Measure Name'].unique()
@@ -33,106 +33,123 @@ def data(annual_path, population_path, aqi_path,i):
 
     frames = [df, data_merge]
     data_merge = pd.concat(frames, axis=1, join="inner")
+    #print(data_merge['Asthma'])
+    print(data_merge.head())
 
 
-    for location in data_merge.index:
-        data_merge['Asthma'][location] = (data_merge['Asthma'][location] * data_merge['Population'][location]) / 100
-        data_merge.insert(5, 'Metric', '0.0')
-        skewed_data=data_merge.skew(axis=0, skipna=True)
-        quantile_50=data_merge.quantile(0.5, axis = 0)
-        quantile_100 = data_merge.quantile(1.0, axis=0)
-        quantile_75=data_merge.quantile(0.75, axis=0)
-        #print(skewed_data)
-        #print(quantile_50)
-        #print(quantile_75)
-        #print(quantile_25)
-        print(quantile_50)
-        print(quantile_75)
-        print(quantile_100)
-        data_merge['Metric'] = data_merge['Metric'].astype(float)
-        for i, row in data_merge.iterrows():
-            row[0]=(row[0]*row[2])/100
-            #print(row[0],[row[2]])
-            #row[0]=(row[0]*row[2])/100
-            sum=0
-            #print(f"Index: {i}")
-            #print(f"{row[0]}\n")
-            if (row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] >= quantile_75[0]) or \
-                    (quantile_50[2]<=row[2]<quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and
-                     quantile_50[0]<=row[0]<quantile_75[0]) or (row[2]<quantile_50[2] and row[4]<quantile_50[4]and row[0]<quantile_50[0]):
-                sum = +3
-            elif (row[2]<quantile_50[2] and quantile_50[4]<=row[4]<quantile_75[4] and quantile_50[0]<=row[0]<quantile_75[0]) \
-                    or (quantile_50[2]<=row[2]<quantile_75[2] and row[4]>quantile_75[4] and row[0]>=quantile_75[0]):
-                sum=+3.25
-            elif(row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and quantile_50[0] <= row[0] < quantile_75[0]) or \
-                (quantile_50[2]<=row[2]<quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]<quantile_50[0]):
-                sum=+2.7
+    for index in data_merge.index:
+        data_merge['Air Pollution'][index] = (data_merge['Air Pollution'][index] * data_merge['Population'][index]) / 100
+        data_merge['Smoking'][index] = (data_merge['Smoking'][index] * data_merge['Population'][index]) / 100
+        data_merge['Asthma'][index] = (data_merge['Asthma'][index] * data_merge['Population'][index]) / 100
 
-            elif (row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]>=quantile_75[0]) or \
-                    (quantile_50[2]<=row[2]<quantile_75[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]):
-                sum=+2.5
+    data_merge.insert(5, 'Metric', '0.0')
+    skewed_data = data_merge.skew(axis=0, skipna=True)
+    #print(skewed_data)
+    quantile_50 = data_merge.quantile(0.5, axis=0)
+    quantile_75 = data_merge.quantile(0.75, axis=0)
+    #print(quantile_50)
+    # print(quantile_75)
+    data_merge['Metric'] = data_merge['Metric'].astype(float)
+    #print(data_merge[['Population', 'Air Pollution','Asthma', 'Population_Density']])
+    for i,row in data_merge.iterrows():
+        print(row[0])
+        sum = 0
+        if (row[3] >= quantile_75[3] and row[4] >= quantile_75[4] and row[1] >= quantile_75[1]) or \
+                (quantile_50[3] <= row[3] < quantile_75[3] and quantile_50[4] <= row[4] < quantile_75[4] and
+                 quantile_50[1] <= row[1] < quantile_75[1]) or (row[3] < quantile_50[3] and row[4] < quantile_50[4] and \
+                                                                row[1] < quantile_50[1]):
+            sum = +3
+        elif (row[3] < quantile_50[3] and quantile_50[4] <= row[4] < quantile_75[4] and quantile_50[1] <= row[1] <
+              quantile_75[1]) \
+                or (
+                quantile_50[3] <= row[3] < quantile_75[3] and row[4] > quantile_75[4] and row[1] >= quantile_75[1]):
+            sum = +3.25
+        elif (row[3] >= quantile_75[3] and row[4] >= quantile_75[4] and quantile_50[1] <= row[1] < quantile_75[
+            2]) or \
+                (quantile_50[3] <= row[3] < quantile_75[3] and quantile_50[4] <= row[4] < quantile_75[4] and row[
+                    2] < quantile_50[1]):
+            sum = +2.75
+        elif (row[3] >= quantile_75[3] and quantile_50[4] <= row[4] < quantile_75[4] and row[1] >= quantile_75[
+            2]) or \
+                (quantile_50[3] <= row[3] < quantile_75[3] and row[4] < quantile_50[4] and quantile_50[1] <= row[
+                    2] < quantile_75[1]):
+            sum = +2.5
+        elif (row[3] >= quantile_75[3] and quantile_50[4] <= row[4] < quantile_75[4] and quantile_50[1] <= row[1] <
+              quantile_75[1]) or \
+                (quantile_50[3] <= row[3] < quantile_75[3] and row[4] >= quantile_75[4] and row[1] >= quantile_75[
+                    2]):
+            sum = +2.0
+        elif row[3] >= quantile_75[3] and row[4] < quantile_50[4] and row[1] >= quantile_75[1]:
+            sum = +2.25
+        elif row[3] < quantile_50[3] and row[4] >= quantile_75[4] and quantile_50[1] <= row[1] < quantile_75[1]:
+            sum = +0.5
+        elif row[3] < quantile_50[3] and row[4] >= quantile_75[4] and quantile_50[1] < row[1]:
+            sum = +0.75
+        elif row[3] >= quantile_75[3] and quantile_50[4] <= row[4] < quantile_75[4] and row[1] < quantile_50[1]:
+            sum = -0.5
+        elif quantile_50[3] <= row[3] < quantile_75[3] and row[4] >= quantile_75[4] and row[1] < quantile_50[1]:
+            sum = +1
+        elif row[3] < quantile_50[3] and quantile_50[4] <= row[4] < quantile_75[4] and row[1] >= quantile_75[1]:
+            sum = +1.5
+        elif quantile_50[3] <= row[3] < quantile_75[3] and row[4] < quantile_50[4] and row[1] >= quantile_75[1]:
+            sum = -0.25
+        elif row[3] >= quantile_75[3] and row[4] < quantile_50[4] and quantile_50[1] <= row[1] < quantile_75[1]:
+            sum = +1.25
+        elif row[3] >= quantile_75[3] and row[4] >= quantile_75[4] and row[1] < quantile_50[1]:
+            sum = -1
+        elif row[3] >= quantile_75[3] and row[4] < quantile_50[4] and row[1] < quantile_50[1]:
+            sum = -0.75
+        elif row[3] < quantile_50[3] and row[4] >= quantile_75[4] and row[1] >= quantile_75[1]:
+            sum = -2
+        elif row[3] < quantile_50[3] and row[4] < quantile_50[4] and row[1] >= quantile_75[1]:
+            sum = -3
+        elif row[3] < quantile_50[3] and row[4] < quantile_50[4] and quantile_50[1] <= row[1] < quantile_75[1]:
+            sum = -2.5
 
-            elif (row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and quantile_50[0]<=row[0]<quantile_75[0]) or \
-                    (quantile_50[2]<=row[2]<quantile_75[2] and row[4]>=quantile_75[4] and row[0]>=quantile_75[0]):
-                sum=+2.0
+        row[5] = sum
+        if (row[5] == 3.25 and row[0] >= quantile_75[0] and row[2] >= quantile_75[2]) or \
+                (row[5] == 3.25 and row[0] < quantile_50[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.25 and quantile_50[0] <= row[0] < quantile_75[0] and quantile_50[2] <= row[2] <
+                 quantile_75[2]):
+            row[5] += 1.75
+        elif (row[5] == 3.25 and quantile_50[0] <= row[0] < quantile_75[0] and row[2] >= quantile_75[2]) or \
+                (row[5] == 3.25 and quantile_50[2] <= row[2] < quantile_75[2] and row[0] >= quantile_75[0]):
+            row[5] += 1.5
+        elif (row[5] == 3.25 and quantile_50[0] <= row[0] < quantile_75[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.25 and quantile_50[2] <= row[2] < quantile_75[2] and row[0] < quantile_50[0]):
+            row[5] += 1.25
+        elif (row[5] == 3.25 and row[0] >= quantile_75[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.25 and row[2] >= quantile_75[2] and row[0] < quantile_50[0]):
+            row[5] += 1
 
-            elif (row[2] >= quantile_75[2] and row[4]<quantile_50[4]  and row[0] >= quantile_75[0]):
-                sum=+2.25
-            elif row[2]<quantile_50[2] and row[4]>=quantile_75[2] and quantile_50[0]<=row[0]<quantile_75[0]:
-                sum=+0.5
+        elif (row[5] == 3.0 and row[0] >= quantile_75[0] and row[2] >= quantile_75[2]) or \
+                (row[5] == 3.0 and row[0] < quantile_50[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.0 and quantile_50[0] <= row[0] < quantile_75[0] and quantile_50[2] <= row[2] <
+                 quantile_75[
+                     2]):
+            row[5] += 1.75
+        elif (row[5] == 3.0 and quantile_50[0] <= row[0] < quantile_75[0] and row[2] >= quantile_75[2]) or \
+                (row[5] == 3.0 and quantile_50[2] <= row[2] < quantile_75[2] and row[0] >= quantile_75[0]):
+            row[5] += 1.5
+        elif (row[5] == 3.0 and quantile_50[0] <= row[0] < quantile_75[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.0 and quantile_50[2] <= row[2] < quantile_75[2] and row[0] < quantile_50[0]):
+            row[5] += 1.25
+        elif (row[5] == 3.0 and row[0] >= quantile_75[0] and row[2] < quantile_50[2]) or \
+                (row[5] == 3.0 and row[2] >= quantile_75[2] and row[0] < quantile_50[0]):
+            row[5] += 1
 
-            elif row[2]<quantile_50[2] and row[4]>=quantile_75[2] and quantile_50[0]<row[0]:
-                sum=+0.75
-            elif row[2]>=quantile_75[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]<quantile_50[0]:
-                sum=-0.5
-
-            elif quantile_50[2]<=row[2]<quantile_75[2] and row[4]>=quantile_75[4] and row[0]<quantile_50[0]:
-               sum=+1
-
-            elif row[2]<quantile_50[2] and quantile_50[4]<=row[4]<quantile_75[4] and row[0]>=quantile_75[0]:
-                sum=+1.5
-
-            elif quantile_50[2]<=row[2]<quantile_75[2] and row[4]<quantile_50[4] and row[0]>=quantile_75[0]:
-                sum=-0.25
-
-            elif row[2]>=quantile_75[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]:
-                sum=+1.25
-
-            elif row[2] >= quantile_75[2] and row[4] >= quantile_75[4] and row[0] < quantile_50[0]:
-                sum=-1
-
-            elif row[2]>= quantile_75[2] and row[4] < quantile_50[4] and row[0] < quantile_50[0]:
-                sum=-0.75
-
-            elif row[2]<quantile_50[2] and row[4]>=quantile_75[4] and row[0]>=quantile_75[0]:
-                sum=-2
-
-            elif row[2]<quantile_50[2] and row[4]<quantile_50[4] and row[0]>=quantile_75[0]:
-                sum=-3
-
-            elif row[2]<quantile_50[2] and row[4]<quantile_50[4] and quantile_50[0]<=row[0]<quantile_75[0]:
-                sum=-2.5
-
-
-            row[5]=sum
-            #print(row[5])
-            plt.plot(row[0],row[2])
-            plt.show()
-            #plt.plot(row[0],row[2])
-            #plt.show()
-        #print(data_merge['Metric'])
         print(data_merge.sort_values(by=['Population'], inplace=False))
         #print('\n')
         #print(data_merge[['Population','Asthma', 'Population Density']])
 
-        print(data_merge[['Population','Asthma', 'Population_Density']])
-        plt.figure(figsize=(8,5))
-        plt.plot(data_merge.index, data_merge.Population,'red',label="Population")
-        plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
-        plt.title('Population VS Asthma')
-        plt.ylabel('Number of persons')
-        plt.legend()
-        plt.show()
+        #print(data_merge[['Population','Asthma', 'Population_Density']])
+        #plt.figure(figsize=(8,5))
+        #plt.plot(data_merge.index, data_merge.Population,'red',label="Population")
+        #plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
+        #plt.title('Population VS Asthma')
+        #plt.ylabel('Number of persons')
+        #plt.legend()
+        #plt.show()
         #print(data_merge.index)
 
 
@@ -146,14 +163,10 @@ population_files = ["Datasets/Population/population_2012.csv",
                     "Datasets/Population/population_2015.csv","Datasets/Population/population_2016.csv",
                     "Datasets/Population/population_2017.csv","Datasets/Population/population_2018.csv",
                     "Datasets/Population/population_2019.csv","Datasets/Population/population_2020.csv"]
-AQI_files=["Datasets/AQI/annual_aqi_by_county_2012.csv",
-           "Datasets/AQI/annual_aqi_by_county_2013.csv","Datasets/AQI/annual_aqi_by_county_2014.csv",
-           "Datasets/AQI/annual_aqi_by_county_2015.csv","Datasets/AQI/annual_aqi_by_county_2016.csv",
-           "Datasets/AQI/annual_aqi_by_county_2017.csv","Datasets/AQI/annual_aqi_by_county_2018.csv",
-           "Datasets/AQI/annual_aqi_by_county_2019.csv","Datasets/AQI/annual_aqi_by_county_2020.csv"]
+
 years=['2012','2013','2014','2015','2016','2017','2018','2019','2020']
 
 for i in range(1):
     #function_name([i])
-    data(annual_filenames[i],population_files[i],AQI_files[i],i)
+    data(annual_filenames[i],population_files[i])
    #final= pd.concat([final,data(annual_filenames[i],population_files[i],AQI_files[i],i)],axis=0)
