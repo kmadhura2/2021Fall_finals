@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import skew
 import matplotlib.pyplot as plt
 
-def data(annual_path, population_path, aqi_path,i) -> pd.DataFrame():
+def data(annual_path, population_path,i) -> pd.DataFrame():
     dataset=pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
     list1=dataset['Measure Name'].unique()
@@ -23,13 +23,9 @@ def data(annual_path, population_path, aqi_path,i) -> pd.DataFrame():
     population = pd.read_csv(population_path, skiprows=[0, 1], usecols=['Location', 'Total Residents'])
     population = population.dropna()
     population.rename(columns={'Total Residents': 'Population'}, inplace=True)
-    aqi = pd.read_csv(aqi_path, usecols=['State', 'County', 'Median AQI'])
-    aqi.rename(columns={'State': 'Location'}, inplace=True)
-    aqi_skip = aqi.groupby(['Location']).mean()
-    data_merge = pd.merge(population, aqi_skip, on='Location', how='inner')
     density = pd.read_csv("Datasets/Land area.csv", usecols=['State', 'LandArea'])
     density.rename(columns={'State': 'Location'}, inplace=True)
-    data_merge = pd.merge(data_merge, density, on='Location', how='inner')
+    data_merge = pd.merge(population, density, on='Location', how='inner')
     data_merge.insert(loc=3, column='Population_Density',
                           value=data_merge['Population'] / data_merge['LandArea'])
     data_merge.drop('LandArea', axis=1, inplace=True)
@@ -53,16 +49,12 @@ if __name__ == '__main__':
                         "Datasets/Population/population_2015.csv","Datasets/Population/population_2016.csv",
                         "Datasets/Population/population_2017.csv","Datasets/Population/population_2018.csv",
                         "Datasets/Population/population_2019.csv","Datasets/Population/population_2020.csv"]
-    AQI_files=["Datasets/AQI/annual_aqi_by_county_2012.csv",
-               "Datasets/AQI/annual_aqi_by_county_2013.csv","Datasets/AQI/annual_aqi_by_county_2014.csv",
-               "Datasets/AQI/annual_aqi_by_county_2015.csv","Datasets/AQI/annual_aqi_by_county_2016.csv",
-               "Datasets/AQI/annual_aqi_by_county_2017.csv","Datasets/AQI/annual_aqi_by_county_2018.csv",
-               "Datasets/AQI/annual_aqi_by_county_2019.csv","Datasets/AQI/annual_aqi_by_county_2020.csv"]
+
     years=['2012','2013','2014','2015','2016','2017','2018','2019','2020']
     final=pd.DataFrame()
     temp=pd.DataFrame()
     for i in range(len(years)):
-        temp=data(annual_filenames[i],population_files[i],AQI_files[i],i)
+        temp=data(annual_filenames[i],population_files[i],i)
         final=final.append(temp)
 
     final.to_csv('Datasets/DATA.csv')
