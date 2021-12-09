@@ -28,7 +28,7 @@ def data(annual_path, population_path):
     data_merge.set_index('Location', inplace=True)
     frames = [df, data_merge]
     data_merge = pd.concat(frames, axis=1, join="inner")
-    #print(data_merge.head())
+
 
     #print(data_merge)
     for index in data_merge.index:
@@ -138,13 +138,13 @@ def data(annual_path, population_path):
     print(data_merge.sort_values(by=['Population'], inplace=False))
 
     print(data_merge[['Population','Asthma', 'Population_Density']])
-        plt.figure(figsize=(8,5))
-        plt.plot(data_merge.index, data_merge.Population,'red',label="Population")
-        plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
-        plt.title('Population VS Asthma')
-        plt.ylabel('Number of persons')
-        plt.legend()
-        plt.show()
+    plt.figure(figsize=(8,5))
+    plt.plot(data_merge.index, data_merge.Population,'red',label="Population")
+    plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
+    plt.title('Population VS Asthma')
+    plt.ylabel('Number of persons')
+    plt.legend()
+    plt.show()
         #print(data_merge.index)
 
 
