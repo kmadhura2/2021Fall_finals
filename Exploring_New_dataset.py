@@ -143,9 +143,28 @@ def data(annual_path, population_path):
     plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
     plt.title('Population VS Asthma')
     plt.ylabel('Number of persons')
+    plt.xticks(rotation=90)
     plt.legend()
     plt.show()
-        #print(data_merge.index)
+    fig, ax1 = plt.subplots()
+
+    color = 'tab:red'
+    ax1.set_xlabel('States')
+    ax1.set_ylabel('Number of persons', color=color)
+    ax1.plot(data_merge.index, data_merge['Population'], color=color)
+    ax1.tick_params(axis='y', labelcolor=color)
+
+    ax2 = ax1.twinx()
+
+    color = 'tab:blue'
+    ax2.set_ylabel('Metric', color=color)
+    ax2.plot(data_merge.index, data_merge['Metric'], color=color)
+    ax2.tick_params(axis='y', labelcolor=color)
+
+    fig.tight_layout()
+    plt.show()
+
+    #print(data_merge.index)
 
 
 annual_filenames=['Datasets/Annual Reports/2012-Annual.csv',

@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import skew
 import matplotlib.pyplot as plt
 
-def data(annual_path, population_path,i) -> pd.DataFrame():
+def data(annual_path, population_path) -> pd.DataFrame():
     dataset=pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
     list1=dataset['Measure Name'].unique()
@@ -14,9 +14,15 @@ def data(annual_path, population_path,i) -> pd.DataFrame():
         if list1[i] in list2:
             df=df.append(dataset.loc[(dataset['Measure Name']== list1[i])])
 
+    #print(df)
+
 
     df.drop(columns=['Report Type','Lower CI','Upper CI','Source','Source Year','Rank'], inplace=True)
     df.rename(columns={'State Name': 'Location'}, inplace=True)
+    #print(df)
+    cols=['Location','Year','Measure Name','Value','Score']
+    df_2=df[['Location', 'Year']]
+    #print(df_2)
 
     df = df.pivot(index='Location', columns='Measure Name', values='Value')
 
@@ -31,11 +37,14 @@ def data(annual_path, population_path,i) -> pd.DataFrame():
     data_merge.drop('LandArea', axis=1, inplace=True)
 
     data_merge.set_index('Location', inplace=True)
+    df_2.set_index('Location', inplace=True)
 
     frames=[df,data_merge]
     data_merge=pd.concat(frames,axis=1, join="inner")
+    data_merge=data_merge.merge(df_2,on='Location',how="inner")
 
-    return data_merge
+    return data_merge.drop_duplicates()
+
 
 
 if __name__ == '__main__':
@@ -54,7 +63,9 @@ if __name__ == '__main__':
     final=pd.DataFrame()
     temp=pd.DataFrame()
     for i in range(len(years)):
-        temp=data(annual_filenames[i],population_files[i],i)
+        temp=data(annual_filenames[i],population_files[i])
+        #print(temp)
         final=final.append(temp)
 
+    print(final)
     final.to_csv('Datasets/DATA.csv')
