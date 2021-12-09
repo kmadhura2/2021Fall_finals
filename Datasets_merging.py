@@ -45,7 +45,8 @@ def data(annual_path, population_path) -> pd.DataFrame():
 
     return data_merge.drop_duplicates()
 
-
+def split_years(dt):
+    return [dt[dt['Year'] == y] for y in dt['Year'].unique()]
 
 if __name__ == '__main__':
     annual_filenames=['Datasets/Annual Reports/2012-Annual.csv',
@@ -62,10 +63,17 @@ if __name__ == '__main__':
     years=['2012','2013','2014','2015','2016','2017','2018','2019','2020']
     final=pd.DataFrame()
     temp=pd.DataFrame()
+    final_1=pd.DataFrame()
     for i in range(len(years)):
         temp=data(annual_filenames[i],population_files[i])
         #print(temp)
         final=final.append(temp)
+    final_1=split_years(final)
+    print(type(final_1))
+    f=open('Datasets/DATA.csv','a')
+    for df in final_1:
+        df.to_csv(f)
+    f.close()
 
-    print(final)
-    final.to_csv('Datasets/DATA.csv')
+
+
