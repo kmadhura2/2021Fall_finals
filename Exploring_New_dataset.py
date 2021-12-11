@@ -1,5 +1,5 @@
 import pandas as pd
-
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 def data(annual_path, population_path):
@@ -136,9 +136,9 @@ def data(annual_path, population_path):
                 ((row[5] == 2.75 or row[5]==2.5) and row[2] >= quantile_75[2] and row[0] < quantile_50[0]):
             row[5] += 1
     print(data_merge.sort_values(by=['Population'], inplace=False))
-
+#plotting Population vs Aasthma
     print(data_merge[['Population','Asthma', 'Population_Density']])
-    plt.figure(figsize=(8,5))
+    plt.figure(figsize=(10,12))
     plt.plot(data_merge.index, data_merge.Population,'red',label="Population")
     plt.plot(data_merge.index, data_merge.Asthma, 'blue', label="Asthma")
     plt.title('Population VS Asthma')
@@ -146,16 +146,17 @@ def data(annual_path, population_path):
     plt.xticks(rotation=90)
     plt.legend()
     plt.show()
+#potting Population,Metric and States
     fig, ax1 = plt.subplots()
-
     color = 'tab:red'
     ax1.set_xlabel('States')
-    ax1.set_ylabel('Number of persons', color=color)
+    fig.autofmt_xdate(rotation=90)
+    ax1.tick_params(axis='x', labelsize=8)
+    ax1.set_ylabel('Number of Persons', color=color)
     ax1.plot(data_merge.index, data_merge['Population'], color=color)
     ax1.tick_params(axis='y', labelcolor=color)
 
     ax2 = ax1.twinx()
-
     color = 'tab:blue'
     ax2.set_ylabel('Metric', color=color)
     ax2.plot(data_merge.index, data_merge['Metric'], color=color)
@@ -164,6 +165,18 @@ def data(annual_path, population_path):
     fig.tight_layout()
     plt.show()
 
+#plotting Air Polution, Aasthma, Smoking and States
+    plt.figure(figsize=(15, 15))
+    plt.plot(data_merge.index, data_merge.Smoking,'red',label="Smoking")
+    plt.plot(data_merge.index, data_merge.Asthma,'green',label='Asthma')
+    plt.plot(data_merge.index, data_merge.Population,'blue',label='Population')
+    plt.title('Population VS Asthma Vs Smoking')
+    plt.xticks(rotation=90)
+    plt.legend()
+    plt.show()
+
+#Creating a Heat map of the metric
+    data_merge.scatter()
     #print(data_merge.index)
 
 
