@@ -263,9 +263,9 @@ def dropping_rows(df:pd.DataFrame, states:list):
 # In[26]:
 
 if __name__ == '__main__':
-    final_data = pd.read_csv('C:/Users/PC/Desktop/2021Fall_finals/Datasets/DATA.csv')
+    final_data = pd.read_csv('/Datasets/DATA.csv')
     scaler = MinMaxScaler()
-    
+    print(final_data.head())
     for i in range(len(final_data)):
         if final_data['Location'][i]=="Location":
             final_data=final_data.drop([i])
@@ -274,8 +274,8 @@ if __name__ == '__main__':
     final_data=final_data.drop(['index'], axis=1)
 
 # In[31]:
-
-
+    print(final_data.info())
+    final_data.rename(columns={'Air Pollution': 'Air_Pollution'}, inplace=True)
     final_data[['Air_Pollution','Population','Asthma','Smoking','Population_Density']].apply(pd.to_numeric)
     dict_columns_type = {'Air_Pollution':float,'Asthma':float,'Smoking':float,'Population':float,'Population_Density':float}
     final_data = final_data.astype(dict_columns_type)
