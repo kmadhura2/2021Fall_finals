@@ -35,4 +35,17 @@ Following are the graphs and their respective Heatmaps we found:
 FINAL CONCLUSSION
 From first four heatmaps and graphs we can say that Mortality rate of COVID-19 is related to other respiratory disease, that’s Pneumonia and Influenza, however no such relationship can be found in Incidence rate of COVID-19 and mortality rate of other respiratory disease.
 
+Work Contribution:
+We have worked on it together on most parts such as finding datasets, in the beigning, resolving eachother's doubts and erros.
 
+Himank Dave:
+1.Created Data Merging python file to clean, and merge all datasets. Created Split function to split merged dataset based on years  
+2.Contributed to Future Scope of Hypothesis 1, idea that builds the Metric and coding involved in it, Also the changes that were asked to make in it.
+3.Complete Hypothesis. Finding Datasets, cleaning them and, created Mortality Function to compare mortality rates of various disease being studied
+  Created Incident Rate fuction to calculate incidence rate of covid 19 and then comparing them with the other respiority disease also created a sub plot function to 
+  plot all graphs involving that.
+  
+  Madhura Kulkarni:
+  1. Helped in finding datasets for both Hypothesis 1 and 2.
+  2. Created the if else conditions for the Hypothesis 1 Future Scope.
+  3. Completed the Changes that were asked to make in Hypothesis 1 and created the Hypothesis.py file
