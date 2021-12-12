@@ -18,11 +18,10 @@ In this project, we will be analyzing chronic respiratory diseases like asthma, 
 
 1) **Hypothesis 1**: Highly populated states are at the highest risk of getting asthma in the United States.
 2) **Hypothesis 2**: We hypothesize that the incidence of COVID-19 has a relationship with mortality rates of other respiratory diseases, including pneumonia and influenza.
-Hypothesis 1: Highly populated states are at the highest risk of getting asthma in the United States.
-We began the analysis by understanding the relationship between Population and Asthma over the years for densely populated states and sparsely populated states. We plotted a time-series line graph and we conclude densely populated states and sparsely populate states give similar results and hence, no conclusion can be drawn from these graphs.
 
-To proceed, we considered other factors such as Population Density, Smoking, Asthma and Air Pollution. The heatmap is plotted with no variance and considering as the independent factors. The heatmap shows that there is high correlation between all the variables except for the Population Density.
-To investigate further, we plotted a correlation plot over the years. From this plot, we conclude that Smoking and Air Pollution has decreased over the years and Population, Population Density and Asthma has increased over the years.
+Hypothesis 1: Highly populated states are at the highest risk of getting asthma in the United States.
+
+We began the analysis by understanding the relationship between Population and Asthma over the years for densely populated states and sparsely populated states. We plotted a time-series line graph and we conclude densely populated states and sparsely populate states give similar results and hence, no conclusion can be drawn from these graphs.
 ![image](https://user-images.githubusercontent.com/89532010/145725158-bdce358d-de90-4d88-89c8-16867690d9ed.png)
 ![image](https://user-images.githubusercontent.com/89532010/145725204-ede2c378-8780-45a0-b7a7-f02bad0535c4.png)
 ![image](https://user-images.githubusercontent.com/89532010/145725225-183b1de4-418e-4901-bfb7-56ce98193ac7.png)
