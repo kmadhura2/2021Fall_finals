@@ -1,26 +1,30 @@
 import pandas as pd
+import numpy as np
+from scipy.stats import skew
+import matplotlib.pyplot as plt
 
-def data(annual_path:str, population_path:str) -> pd.DataFrame():
+def data(annual_path, population_path) -> pd.DataFrame():
     dataset=pd.read_csv(annual_path)
     dataset.rename(columns={'Edition': 'Year'}, inplace=True)
     list1=dataset['Measure Name'].unique()
     #print(list1)
     list2=['Asthma','Smoking','Air Pollution']
-    df2=pd.DataFrame()
+    df=pd.DataFrame()
     for i in range(len(list1)):
         if list1[i] in list2:
-            df2=df2.append(dataset.loc[(dataset['Measure Name']== list1[i])])
+            df=df.append(dataset.loc[(dataset['Measure Name']== list1[i])])
 
     #print(df)
 
-    df2.drop(columns=['Report Type','Lower CI','Upper CI','Source','Source Year','Rank'], inplace=True)
-    df2.rename(columns={'State Name': 'Location'}, inplace=True)
+
+    df.drop(columns=['Report Type','Lower CI','Upper CI','Source','Source Year','Rank'], inplace=True)
+    df.rename(columns={'State Name': 'Location'}, inplace=True)
     #print(df)
     cols=['Location','Year','Measure Name','Value','Score']
-    df_2=df2[['Location', 'Year']]
+    df_2=df[['Location', 'Year']]
     #print(df_2)
 
-    df2 = df2.pivot(index='Location', columns='Measure Name', values='Value')
+    df = df.pivot(index='Location', columns='Measure Name', values='Value')
 
     population = pd.read_csv(population_path, skiprows=[0, 1], usecols=['Location', 'Total Residents'])
     population = population.dropna()
@@ -35,14 +39,26 @@ def data(annual_path:str, population_path:str) -> pd.DataFrame():
     data_merge.set_index('Location', inplace=True)
     df_2.set_index('Location', inplace=True)
 
-    frames=[df2,data_merge]
+    frames=[df,data_merge]
     data_merge=pd.concat(frames,axis=1, join="inner")
     data_merge=data_merge.merge(df_2,on='Location',how="inner")
-    data_merge.rename(columns={'Air Pollution':'Air_Pollution'},inplace=True)
 
     return data_merge.drop_duplicates()
 
-def split_years(dt:pd.DataFrame):
+def split_years(dt):
+    """
+
+    :param dt: DataFrame from main class to get unique years
+    :return: list of dataframes
+
+    >> > df = pd.DataFrame()
+    >> > Mortatlity_analysis(df)
+
+    """
+    isempty=data.empty
+    if isempty == True:
+           raise ValueError('DataFrame cannot be empty.')
+
     return [dt[dt['Year'] == y] for y in dt['Year'].unique()]
 
 if __name__ == '__main__':
@@ -66,7 +82,7 @@ if __name__ == '__main__':
         #print(temp)
         final=final.append(temp)
     final_1=split_years(final)
-    #print(type(final_1))
+    print(type(final_1))
     f=open('Datasets/DATA.csv','a')
     for df in final_1:
         df.to_csv(f)
