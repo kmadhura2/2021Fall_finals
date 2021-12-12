@@ -127,9 +127,6 @@ def plotting_bottom(data2:pd.DataFrame,state4:str)->None:
         pass
 
 
-# In[5]:
-
-
 def correlation_factors(corr_data:pd.DataFrame)->None:
     """
     This function plots a line chart explaining the correlation between various factors over the years

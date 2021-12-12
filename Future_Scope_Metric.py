@@ -160,9 +160,6 @@ for i in range(1,(len(location_indices_list)-1)):
 data_merge
 
 
-# In[7]:
-
-
 data_merge.corr(method = 'pearson')
 
 
