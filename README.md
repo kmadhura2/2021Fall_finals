@@ -13,4 +13,4 @@ This proposal is for a type III project
 In this project, we will be analyzing chronic respiratory diseases like asthma, influenza, pneumonia in the United States.
 
 1) **Hypothesis 1**: Highly populated states are at the highest risk of getting asthma in the United States.
-2)** Hypothesis 2**: We hypothesize that the incidence of COVID-19 has a relationship with mortality rates of other respiratory diseases, including pneumonia and influenza.
+2) **Hypothesis 2**: We hypothesize that the incidence of COVID-19 has a relationship with mortality rates of other respiratory diseases, including pneumonia and influenza.
