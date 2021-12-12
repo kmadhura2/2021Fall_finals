@@ -46,6 +46,19 @@ def data(annual_path, population_path) -> pd.DataFrame():
     return data_merge.drop_duplicates()
 
 def split_years(dt):
+    """
+
+    :param dt: DataFrame from main class to get unique years
+    :return: list of dataframes
+
+    >> > df = pd.DataFrame()
+    >> > Mortatlity_analysis(df)
+
+    """
+    isempty=data.empty
+    if isempty == True:
+           raise ValueError('DataFrame cannot be empty.')
+
     return [dt[dt['Year'] == y] for y in dt['Year'].unique()]
 
 if __name__ == '__main__':
