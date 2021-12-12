@@ -34,6 +34,11 @@ Following are the graphs and their respective Heatmaps we found:
  
 FINAL CONCLUSSION
 From first four heatmaps and graphs we can say that Mortality rate of COVID-19 is related to other respiratory disease, that’s Pneumonia and Influenza, however no such relationship can be found in Incidence rate of COVID-19 and mortality rate of other respiratory disease.
+Since the early days of the COVID-19 pandemic, COVID-19 induced pneumonia is been a major issue and wasn't indentified until later. Heatmaps and plots of mortality rate of years ranging from 2020-2021 shows the existence of COVID-19 induced pneumonia. However on looking more into it we have discovered that incidence rate might not have any effect on it. There's a huge prospect of future scope in it, that we will be contuning to work on. 
+
+Limitations of Hypothesis 2:
+Avability of Datasets was a major issue, couldn't find incidence rate of Pneumonia and Influeza, if provided might have given better results to analyze on it.
+Coding isue was faced when tried to plot mortality and incidence rate together, i suspect its due to indexing of both dataframes are different and therefore wasn't able to merge them, even after trying to adjust the second dataframe giving incidence rate upto the standards of first dataframe. If that was possible it would have given better analysis. However results we got were appropriate enough to come to a conclusion.
 
 Work Contribution:
 We have worked on it together on most parts such as finding datasets, in the beigning, resolving eachother's doubts and erros.
