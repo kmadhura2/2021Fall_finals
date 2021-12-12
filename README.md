@@ -6,6 +6,10 @@ Team members:
 Himank Dave- Himank00
 
 Madhura Kulkarni- kmadhura2
+The logic of the program was discussed and then the hypothesis was distributed.
+Hypothesis-1 Madhura Kulkarni
+Hypothesis-2 Himank Dave
+The Future scope metric system was done by both the team members.
 
 Github: https://github.com/kmadhura2/2021Fall_finals
 
@@ -14,7 +18,25 @@ In this project, we will be analyzing chronic respiratory diseases like asthma, 
 
 1) **Hypothesis 1**: Highly populated states are at the highest risk of getting asthma in the United States.
 2) **Hypothesis 2**: We hypothesize that the incidence of COVID-19 has a relationship with mortality rates of other respiratory diseases, including pneumonia and influenza.
+Hypothesis 1: Highly populated states are at the highest risk of getting asthma in the United States.
+We began the analysis by understanding the relationship between Population and Asthma over the years for densely populated states and sparsely populated states. We plotted a time-series line graph and we conclude densely populated states and sparsely populate states give similar results and hence, no conclusion can be drawn from these graphs.
 
+To proceed, we considered other factors such as Population Density, Smoking, Asthma and Air Pollution. The heatmap is plotted with no variance and considering as the independent factors. The heatmap shows that there is high correlation between all the variables except for the Population Density.
+To investigate further, we plotted a correlation plot over the years. From this plot, we conclude that Smoking and Air Pollution has decreased over the years and Population, Population Density and Asthma has increased over the years.
+![image](https://user-images.githubusercontent.com/89532010/145725158-bdce358d-de90-4d88-89c8-16867690d9ed.png)
+![image](https://user-images.githubusercontent.com/89532010/145725204-ede2c378-8780-45a0-b7a7-f02bad0535c4.png)
+![image](https://user-images.githubusercontent.com/89532010/145725225-183b1de4-418e-4901-bfb7-56ce98193ac7.png)
+![image](https://user-images.githubusercontent.com/89532010/145725232-e8ef51f7-fcc9-44b8-af7d-c0b0db887c12.png)
+![image](https://user-images.githubusercontent.com/89532010/145725210-7f236421-16cc-465c-8300-4cf166ead186.png)
+![image](https://user-images.githubusercontent.com/89532010/145725250-01ce732b-e952-4e7a-bf84-62f9b34aeaab.png)
+![image](https://user-images.githubusercontent.com/89532010/145725286-f028d67b-ea0f-431a-a1a6-fa552724e7ea.png)
+![image](https://user-images.githubusercontent.com/89532010/145725257-2926a5da-2284-4f67-a852-ee1350a732f5.png)
+![image](https://user-images.githubusercontent.com/89532010/145725267-0e63a13c-9fee-4cc4-aaae-193792dfa31d.png)
+![image](https://user-images.githubusercontent.com/89532010/145725300-0041790c-d150-46c7-a4ad-aa8d2cb7ddbd.png)
+To proceed, we considered other factors such as Population Density, Smoking, Asthma and Air Pollution. The heatmap is plotted with no variance and considering as the independent factors. The heatmap shows that there is high correlation between all the variables except for the Population Density.
+![image](https://user-images.githubusercontent.com/89532010/145725329-250e0456-673a-40c0-b188-3854c5e53abd.png)
+To investigate further, we plotted a correlation plot over the years. From this plot, we conclude that Smoking and Air Pollution has decreased over the years and Population, Population Density and Asthma has increased over the years.
+![image](https://user-images.githubusercontent.com/89532010/145725345-9b18433c-4b35-427a-ad7b-cd2c70465b0b.png)
 
 Hypothesis 2: We hypothesize that the incidence of COVID-19 has a relationship with mortality rates of other respiratory diseases, including pneumonia and influenza.
 We have used two datasets for this hypothesis, one is State Custom Data from 2017-2020 consisting of mortality data of influenza, pneumonia and COVID-19. Second Dataset is daily record of covid cases in US.
@@ -34,23 +56,5 @@ Following are the graphs and their respective Heatmaps we found:
  
 FINAL CONCLUSSION
 From first four heatmaps and graphs we can say that Mortality rate of COVID-19 is related to other respiratory disease, that’s Pneumonia and Influenza, however no such relationship can be found in Incidence rate of COVID-19 and mortality rate of other respiratory disease.
-Since the early days of the COVID-19 pandemic, COVID-19 induced pneumonia is been a major issue and wasn't indentified until later. Heatmaps and plots of mortality rate of years ranging from 2020-2021 shows the existence of COVID-19 induced pneumonia. However on looking more into it we have discovered that incidence rate might not have any effect on it. There's a huge prospect of future scope in it, that we will be contuning to work on. 
 
-Limitations of Hypothesis 2:
-Avability of Datasets was a major issue, couldn't find incidence rate of Pneumonia and Influeza, if provided might have given better results to analyze on it.
-Coding isue was faced when tried to plot mortality and incidence rate together, i suspect its due to indexing of both dataframes are different and therefore wasn't able to merge them, even after trying to adjust the second dataframe giving incidence rate upto the standards of first dataframe. If that was possible it would have given better analysis. However results we got were appropriate enough to come to a conclusion.
 
-Work Contribution:
-We have worked on it together on most parts such as finding datasets, in the beigning, resolving eachother's doubts and erros.
-
-Himank Dave:
-1.Created Data Merging python file to clean, and merge all datasets. Created Split function to split merged dataset based on years  
-2.Contributed to Future Scope of Hypothesis 1, idea that builds the Metric and coding involved in it, Also the changes that were asked to make in it.
-3.Complete Hypothesis. Finding Datasets, cleaning them and, created Mortality Function to compare mortality rates of various disease being studied
-  Created Incident Rate fuction to calculate incidence rate of covid 19 and then comparing them with the other respiority disease also created a sub plot function to 
-  plot all graphs involving that.
-  
-  Madhura Kulkarni:
-  1. Helped in finding datasets for both Hypothesis 1 and 2.
-  2. Created the if else conditions for the Hypothesis 1 Future Scope.
-  3. Completed the Changes that were asked to make in Hypothesis 1 and created the Hypothesis.py file
