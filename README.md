@@ -5,11 +5,22 @@ Title: Studying various chronic respiratory diseases in the United States over t
 Team members:
 Himank Dave- Himank00
 
-Madhura Kulkarni- kmadhura2
-The logic of the program was discussed and then the hypothesis was distributed.
-Hypothesis-1 Madhura Kulkarni
-Hypothesis-2 Himank Dave
-The Future scope metric system was done by both the team members.
+Himank Dave:
+
+1.Created Data Merging python file to clean, and merge all datasets. Created Split function to split merged dataset based on years  
+
+2.Contributed to Future Scope of Hypothesis 1, idea that builds the Metric and coding involved in it, Also the changes that were asked to make in it.
+
+3.Complete Hypothesis. Finding Datasets, cleaning them and, created Mortality Function to compare mortality rates of various disease being studied
+
+ 4.Created Incident Rate fuction to calculate incidence rate of covid 19 and then comparing them with the other respiority disease also created a sub plot function to 
+  plot all graphs involving that.
+
+  Madhura Kulkarni:
+  1. Helped in finding datasets for both Hypothesis 1 and 2.
+  2. Created the if else conditions for the Hypothesis 1 Future Scope.
+  3. Completed the Changes that were asked to make in Hypothesis 1 and created the Hypothesis.py file
+
 
 Github: https://github.com/kmadhura2/2021Fall_finals
 
@@ -57,3 +68,10 @@ FINAL CONCLUSSION
 From first four heatmaps and graphs we can say that Mortality rate of COVID-19 is related to other respiratory disease, that’s Pneumonia and Influenza, however no such relationship can be found in Incidence rate of COVID-19 and mortality rate of other respiratory disease.
 
 
+
+References:
+https://www.youtube.com/watch?v=0P7QnIQDBJY&t=1186s
+
+https://thispointer.com/python-convert-list-of-lists-or-nested-list-to-flat-list/
+
+https://www.delftstack.com/howto/seaborn/size-of-seaborn-heatmap/#use-the-seaborn.set-function-to-set-the-seaborn-heatmap-size
